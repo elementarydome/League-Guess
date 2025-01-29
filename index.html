@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LoL Skin Guesser - Ranked Mode</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <div>Loading game assets...</div>
+    </div>
+
+    <!-- Game UI -->
+    <div id="game-container">
+        <!-- Timer and Rank Display -->
+        <div id="timer-rank-container">
+            <div id="timer">Time: <span id="time">--:--</span></div>
+            <div id="rank-display">
+                <img id="rank-emblem" src="ranks/unranked.png" alt="Rank Emblem">
+                <span id="rank-name">Unranked</span>
+                <span id="progress-counter">0/10</span>
+            </div>
+        </div>
+
+        <!-- HP Bar -->
+        <div id="hp-bar-container" class="hidden">
+            <div id="hp-bar"></div>
+            <span id="hp-text">100 HP</span>
+        </div>
+
+        <!-- Skin Image -->
+        <div id="skin-container">
+            <img id="skin-image" src="" alt="Champion Skin">
+        </div>
+
+        <!-- Input and Hard Mode Toggle -->
+        <div id="input-container">
+            <input type="text" id="guess-input" placeholder="Type champion name and press Enter..." autocomplete="off">
+            <button id="hard-mode-toggle">Hard Mode: OFF</button>
+        </div>
+
+        <!-- Feedback -->
+        <div id="feedback-container">
+            <div id="feedback"></div>
+        </div>
+    </div>
+
+    <!-- Rank Up Modal -->
+    <div id="rank-up-modal" class="modal">
+        <div class="modal-content">
+            <div class="rank-animation">
+                <img id="rank-up-emblem" src="" alt="New Rank">
+            </div>
+            <h2 id="rank-up-title">Congratulations!</h2>
+            <p id="rank-up-message"></p>
+            <div class="modal-buttons">
+                <button id="continue-button">Continue Playing</button>
+                <button id="quit-button">Quit Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal">
+        <div class="modal-content">
+            <h2>Game Over!</h2>
+            <p id="game-over-message"></p>
+            <p id="final-stats"></p>
+            <button id="restart-button">Play Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
