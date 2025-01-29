@@ -84,39 +84,72 @@ function hideLoadingScreen() {
 async function generateValidSkinList() {
     gameState.remainingSkins = [];
 
-    // Complete champion list
+    // Updated list: Only Female Champions
     const champions = [
-        // Male Champions
-        'Aatrox', 'Akshan', 'Alistar', 'Amumu', 'Bard', 'Blitzcrank', 'Brand', 
-        'Braum', 'Chogath', 'Corki', 'Darius', 'Draven', 'Ekko', 'Ezreal', 
-        'Fiddlesticks', 'Galio', 'Gangplank', 'Garen', 'Graves', 'Hecarim', 
-        'Heimerdinger', 'JarvanIV', 'Jax', 'Jayce', 'Jhin', 'Karthus', 'Kassadin', 
-        'Kayn', 'Kennen', 'Khazix', 'Kled', 'Kogmaw', 'Lee Sin', 'Lucian', 
-        'Malphite', 'Malzahar', 'Maokai', 'MasterYi', 'Mordekaiser', 'Nasus', 
-        'Nautilus', 'Nocturne', 'Nunu', 'Olaf', 'Ornn', 'Pantheon', 'Pyke', 
-        'Rakan', 'Rammus', 'Reksai', 'Renekton', 'Rengar', 'Rumble', 'Ryze', 
-        'Sett', 'Shaco', 'Shen', 'Singed', 'Sion', 'Skarner', 'Swain', 'Sylas', 
-        'Tahmkench', 'Talon', 'Taric', 'Teemo', 'Thresh', 'Trundle', 'Tryndamere', 
-        'Twisted Fate', 'Twitch', 'Udyr', 'Urgot', 'Varus', 'Veigar', 'Velkoz', 
-        'Vex', 'Viktor', 'Vladimir', 'Volibear', 'Warwick', 'Wukong', 'Xerath', 
-        'Xinzhao', 'Yasuo', 'Yone', 'Yorick', 'Zac', 'Zed', 'Ziggs', 'Zilean',
-        
-        // Female Champions
-        'Ahri', 'Akali', 'Anivia', 'Annie', 'Ashe', 'Belveth', 'Caitlyn', 
-        'Camille', 'Cassiopeia', 'Diana', 'Elise', 'Evelynn', 'Fiora', 'Illaoi', 
-        'Irelia', 'Janna', 'Jinx', 'KaiSa', 'Kalista', 'Karma', 'Katarina', 
-        'Kayle', 'Kindred', 'LeBlanc', 'Leona', 'Lillia', 'Lissandra', 'Lux', 
-        'Miss Fortune', 'Morgana', 'Nami', 'Neeko', 'Nidalee', 'Nilah', 'Orianna', 
-        'Poppy', 'Qiyana', 'Quinn', 'Rell', 'RenataGlasc', 'Riven', 'Samira', 
-        'Sejuani', 'Senna', 'Seraphine', 'Shyvana', 'Sivir', 'Sona', 'Soraka', 
-        'Syndra', 'Taliyah', 'Tristana', 'Vayne', 'Vi', 'Yuumi', 'Zeri', 'Zoe', 
-        'Zyra'
+        "Ahri",
+        "Akali",
+        "Anivia",
+        "Annie",
+        "Ashe",
+        "Belveth",
+        "Caitlyn",
+        "Camille",
+        "Cassiopeia",
+        "Diana",
+        "Elise",
+        "Evelynn",
+        "Fiora",
+        "Illaoi",
+        "Irelia",
+        "Janna",
+        "Jinx",
+        "KaiSa",
+        "Kalista",
+        "Karma",
+        "Katarina",
+        "Kayle",
+        "Kindred",
+        "LeBlanc",
+        "Leona",
+        "Lillia",
+        "Lissandra",
+        "Lux",
+        "Miss Fortune",
+        "Morgana",
+        "Nami",
+        "Neeko",
+        "Nidalee",
+        "Nilah",
+        "Orianna",
+        "Poppy",
+        "Qiyana",
+        "Quinn",
+        "Rell",
+        "RenataGlasc",
+        "Riven",
+        "Samira",
+        "Sejuani",
+        "Senna",
+        "Seraphine",
+        "Shyvana",
+        "Sivir",
+        "Sona",
+        "Soraka",
+        "Syndra",
+        "Taliyah",
+        "Tristana",
+        "Vayne",
+        "Vi",
+        "Yuumi",
+        "Zeri",
+        "Zoe",
+        "Zyra"
     ];
 
     const skinPromises = [];
 
     for (let champion of champions) {
-        for (let i = 1; i <= 20; i++) { // Adjust the max number as needed
+        for (let i = 1; i <= 20; i++) { // Adjust the max number as needed based on actual skin counts
             const skinPromise = new Promise((resolve) => {
                 const img = new Image();
                 img.src = `skins/${champion}__${i}.jpg`; // Ensure this path is correct
@@ -159,7 +192,7 @@ function handleGuess(event) {
     const guess = elements.guessInput.value.trim().toLowerCase();
     const correctName = gameState.currentSkin.name.toLowerCase();
     
-    // Handle special cases for champion names with spaces
+    // Handle special cases for champion names with spaces or special characters
     const correct = (guess === correctName || 
                     guess === correctName.replace(/\s+/g, '') ||
                     guess === correctName.replace(/\s+/g, '-'));
