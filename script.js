@@ -57,7 +57,7 @@ const elements = {
 initGame();
 
 // Event Listeners
-elements.guessInput.addEventListener('keypress', handleGuess);
+elements.guessInput.addEventListener('keydown', handleGuess);
 elements.hardModeToggle.addEventListener('click', toggleHardMode);
 elements.continueButton.addEventListener('click', continueGame);
 elements.quitButton.addEventListener('click', quitGame);
@@ -153,12 +153,13 @@ async function generateValidSkinList() {
     const skinPromises = [];
 
     for (let champion of champions) {
-        for (let i = 1; i <= 20; i++) { // Adjust the max number as needed based on actual skin counts
+        for (let i = 1; i <= 2; i++) { // Limit to skins 1 and 2
             const skinPromise = new Promise((resolve) => {
                 const img = new Image();
                 img.src = `skins/${champion}__${i}.jpg`; // Ensure this path is correct
                 
                 img.onload = () => {
+                    console.log(`Loaded skin: ${champion}__${i}.jpg`);
                     gameState.remainingSkins.push({
                         name: champion,
                         imageUrl: `skins/${champion}__${i}.jpg` // Ensure this path is correct
@@ -167,7 +168,6 @@ async function generateValidSkinList() {
                 };
                 
                 img.onerror = () => {
-                    // If the skin image doesn't exist, skip it
                     console.warn(`Skin image not found: skins/${champion}__${i}.jpg`);
                     resolve(); // Resolve even if the image fails to load
                 };
@@ -179,13 +179,32 @@ async function generateValidSkinList() {
     await Promise.all(skinPromises);
 
     // Shuffle the skins array
-    gameState.remainingSkins.sort(() => Math.random() - 0.5);
+    shuffleArray(gameState.remainingSkins);
+    console.log(`Total skins loaded: ${gameState.remainingSkins.length}`);
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }
 
 function newSkin() {
     if (gameState.remainingSkins.length === 0) {
-        generateValidSkinList();
+        generateValidSkinList().then(() => {
+            if (gameState.remainingSkins.length === 0) {
+                endGame("No skins available to display.");
+                return;
+            }
+            displayNewSkin();
+        });
+    } else {
+        displayNewSkin();
     }
+}
+
+function displayNewSkin() {
     gameState.currentSkin = gameState.remainingSkins.pop();
     elements.skinImage.src = gameState.currentSkin.imageUrl;
 }
